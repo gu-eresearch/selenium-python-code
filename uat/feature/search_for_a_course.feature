@@ -1,4 +1,4 @@
-Feature: I can add a scateboard to my cart
+Feature: I can search for degrees
 
 Scenario:
     Given I am on the home page

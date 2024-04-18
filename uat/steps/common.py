@@ -16,28 +16,28 @@ ignored_exceptions=(NoSuchElementException,StaleElementReferenceException)
 ########################################################################################################################
 def selector_visible(context, _element, _type):
     if _type == "selector":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, _element))
             )
     
     elif _type == "id":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.visibility_of_element_located((By.ID, _element))
             )
 
     elif _type == "xpath":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.visibility_of_element_located((By.XPATH, _element))
             )
     
     elif _type == "text":
         xsearch = "//*[text()=" + '"' + _element + '"' + "]"
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.visibility_of_element_located((By.XPATH, xsearch))
             )
 
     elif _type == "name":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.visibility_of_element_located((By.NAME, _element))
             )
         
@@ -48,28 +48,28 @@ def selector_visible(context, _element, _type):
 ##################################
 def selector_invisible(context, _element, _type, timeout=timeout):
     if _type == "selector":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.invisibility_of_element_located((By.CSS_SELECTOR, _element))
             )
     
     elif _type == "id":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.invisibility_of_element_located((By.ID, _element))
             )
 
     elif _type == "xpath":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.invisibility_of_element_located((By.XPATH, _element))
             )
     
     elif _type == "text":
         xsearch = "//*[text()=" + '"' + _element + '"' + "]"
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.invisibility_of_element_located((By.XPATH, xsearch))
             )
 
     elif _type == "name":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.invisibility_of_element_located((By.NAME, _element))
             )
         
@@ -79,28 +79,28 @@ def selector_invisible(context, _element, _type, timeout=timeout):
 ##################################
 def selector_clickable(context, _element, _type):
     if _type == "selector":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, _element))
             )
     
     elif _type == "id":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.element_to_be_clickable((By.ID, _element))
             )
 
     elif _type == "xpath":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.element_to_be_clickable((By.XPATH, _element))
             )
     
     elif _type == "text":
         xsearch = "//*[text()=" + '"' + _element + '"' + "]"
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.element_to_be_clickable((By.XPATH, xsearch))
             )
 
     elif _type == "name":
-        selected_element = WebDriverWait(context.browser, timeout, ignored_exceptions=ignored_exceptions).until(
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
             EC.element_to_be_clickable((By.NAME, _element))
             )
         
@@ -134,7 +134,7 @@ def check_element_located(context, _type, element):
     # _type are: selector, id, text (uses xpath search), xpath
     if _type == "selector":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR, element))
                 )
         except TimeoutException:
@@ -143,7 +143,7 @@ def check_element_located(context, _type, element):
     
     if _type == "id":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.visibility_of_element_located((By.ID, element))
                 )
         except TimeoutException:
@@ -152,7 +152,7 @@ def check_element_located(context, _type, element):
     
     if _type == "xpath":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.visibility_of_element_located((By.XPATH, element))
                 )
         except TimeoutException:
@@ -162,7 +162,7 @@ def check_element_located(context, _type, element):
     if _type == "text":
         xsearch = "//*[text()=" + '"' + element + '"' + "]"
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.visibility_of_element_located((By.XPATH, xsearch))
                 )
         except TimeoutException:
@@ -171,7 +171,7 @@ def check_element_located(context, _type, element):
 
     if _type == "name":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.visibility_of_element_located((By.NAME, element))
                 )
         except TimeoutException:
@@ -184,7 +184,7 @@ def check_clickable_by_element(context, _type, element):
     # _type are: selector, id, text (uses xpath search), xpath
     if _type == "selector":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, element))
                 )
         except TimeoutException:
@@ -193,7 +193,7 @@ def check_clickable_by_element(context, _type, element):
     
     if _type == "id":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.element_to_be_clickable((By.ID, element))
                 )
         except TimeoutException:
@@ -202,7 +202,7 @@ def check_clickable_by_element(context, _type, element):
     
     if _type == "xpath":
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.element_to_be_clickable((By.XPATH, element))
                 )
         except TimeoutException:
@@ -212,7 +212,7 @@ def check_clickable_by_element(context, _type, element):
     if _type == "text":
         xsearch = "//*[text()=" + '"' + element + '"' + "]"
         try:
-            WebDriverWait(context.browser, 0.1, ignored_exceptions=ignored_exceptions).until(
+            WebDriverWait(context.driver, 0.1, ignored_exceptions=ignored_exceptions).until(
                 EC.element_to_be_clickable((By.XPATH, xsearch))
                 )
         except TimeoutException:
@@ -221,15 +221,15 @@ def check_clickable_by_element(context, _type, element):
     
 ########################################################################################################################
 ########################################################################################################################      
-@when(u'I wait for the element/type "{element}"/"{_type}" to load')
-@then(u'I wait for the element/type "{element}"/"{_type}" to load')
+@when(u'I wait for the element/type "{_element}"/"{_type}" to load')
+@then(u'I wait for the element/type "{_element}"/"{_type}" to load')
 # _type are: selector, id, text (uses xpath search), xpath
 # element is the name of the selector, id ect
-def step_impl(context, _type, element, timeout=timeout):
+def step_impl(context, _type, _element, timeout=timeout):
     seconds = 0.0
     _wait = True
     while _wait and seconds < timeout:
-        if check_element_located(context, _type, element):
+        if check_element_located(context, _type, _element):
             _wait = False
         seconds += 0.1
         time.sleep(0.1)
@@ -277,7 +277,7 @@ def step_impl(context, _text, _element, _type):
     context.execute_steps(u'when I wait for the element/type "{element}"/"{_type}" to load'.format(element=_element, _type=_type))
     _selected_element = selector_visible(context, _element, _type)
 
-    context.browser.execute_script("arguments[0].scrollIntoView();", _selected_element)
+    context.driver.execute_script("arguments[0].scrollIntoView();", _selected_element)
     
     _selected_element.send_keys(_text)
 
@@ -294,7 +294,7 @@ def step_impl(context, _text, _element, _type):
     
     _selected_element = selector_visible(context, _element, _type)
 
-    actions = ActionChains(context. browser)
+    actions = ActionChains(context.driver)
     actions.move_to_element(_selected_element)
     actions.click().perform()
 
@@ -313,9 +313,9 @@ def step_impl(context, _element, _type):
     
     _selected_element = selector_visible(context, _element, _type)
 
-    context.browser.execute_script("arguments[0].scrollIntoView();", _selected_element)
+    context.driver.execute_script("arguments[0].scrollIntoView();", _selected_element)
 
-    actions = ActionChains(context. browser)
+    actions = ActionChains(context.driver)
     actions.move_to_element(_selected_element)
     actions.click().perform()
 
@@ -350,7 +350,7 @@ def step_impl(context, _element, _type):
 
     context.execute_steps(u'when The element/type "{_element}"/"{_type}" is visible'.format(_element=_element, _type=_type))
     _field = selector_visible(context, _element, _type)
-    context.browser.execute_script("arguments[0].scrollIntoView();", _field)
+    context.driver.execute_script("arguments[0].scrollIntoView();", _field)
     _field.clear()
     time.sleep(1)
 
@@ -372,6 +372,6 @@ def step_impl(context, _element, _type, _equal_to_text):
     context.execute_steps(u'when I wait for the element/type "{element}"/"{_type}" to load'.format(element=_element, _type=_type))
     _selected_element = selector_visible(context, _element, _type)
 
-    context.browser.execute_script("arguments[0].scrollIntoView();", _selected_element)
+    context.driver.execute_script("arguments[0].scrollIntoView();", _selected_element)
     
     assert(_selected_element.text == _equal_to_text)

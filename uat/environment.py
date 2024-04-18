@@ -47,7 +47,7 @@ def selenium_driver_firefox(context):
     context.driver.quit()
 
 def before_all(context):
-    driver = os.getenv("BEHAVE_DRIVER", "chrome_headless")
+    driver = os.getenv("BEHAVE_DRIVER", "chrome")
     fixture_func = globals().get("selenium_driver_{}".format(driver.lower().strip()), None)
     if fixture_func is None:
         raise LookupError("No such driver fixture: selenium_driver_{}".format(driver.lower().strip()))
