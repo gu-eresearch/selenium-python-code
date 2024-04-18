@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 import os
 
@@ -10,6 +11,36 @@ timeout = 10
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException)
 ########################################################################################################################
 ########################################################################################################################
+def selector_visible(context, _element, _type):
+    if _type == "selector":
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, _element))
+            )
+    
+    elif _type == "id":
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
+            EC.visibility_of_element_located((By.ID, _element))
+            )
+
+    elif _type == "xpath":
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
+            EC.visibility_of_element_located((By.XPATH, _element))
+            )
+    
+    elif _type == "text":
+        xsearch = "//*[text()=" + '"' + _element + '"' + "]"
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
+            EC.visibility_of_element_located((By.XPATH, xsearch))
+            )
+
+    elif _type == "name":
+        selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(
+            EC.visibility_of_element_located((By.NAME, _element))
+            )
+        
+    return selected_element
+
+
 
 @when(u'scrolling has stopped')
 # function that waits until scrolling down the page has stopped
@@ -62,3 +93,13 @@ def step_impl(context, video_name):
     download_wait(video_name[0], video_name[1])
     # delete downloaded video
     download_delete(video_name[0], video_name[1])
+
+
+
+@when(u'I swipe left on a button')
+def step_impl(context, _element, _type):
+    _selected_element = selector_visible(context, _element, _type)
+    download_button = context.driver.find_element(By.XPATH, _selected_element)
+    actions = ActionChains(context.driver)
+    actions.drag_and_drop_by_offset(download_button, -80, 0)
+    actions.perform()
