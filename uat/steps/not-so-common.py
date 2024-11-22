@@ -11,6 +11,18 @@ timeout = 10
 ignored_exceptions=(NoSuchElementException,StaleElementReferenceException)
 ########################################################################################################################
 ########################################################################################################################
+
+#Check that a web element matches (test_item) a specified element (check_item)
+def check_exists(test_item, check_item):
+    try:
+        assert(test_item == check_item)
+    except AssertionError:
+        return False
+    return True
+
+
+
+
 def selector_visible(context, _element, _type):
     if _type == "selector":
         selected_element = WebDriverWait(context.driver, timeout, ignored_exceptions=ignored_exceptions).until(

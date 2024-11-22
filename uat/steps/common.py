@@ -218,7 +218,105 @@ def check_clickable_by_element(context, _type, element):
         except TimeoutException:
             return False
         return True
+
+#####################################
+##################################### 
+def check_element_visible(context, _type, _element, timeout=timeout):
+    if _type == "selector":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
     
+    elif _type == "id":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.visibility_of_element_located((By.ID, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+
+    elif _type == "xpath":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.visibility_of_element_located((By.XPATH, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+    
+    elif _type == "text":
+        try:
+            xsearch = "//*[text()=" + '"' + _element + '"' + "]"
+            WebDriverWait(context.browser, timeout).until(
+                EC.visibility_of_element_located((By.XPATH, xsearch))
+                )
+        except TimeoutException:
+            return False
+        return True
+
+    elif _type == "name":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.visibility_of_element_located((By.NAME, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+
+#####################################
+##################################### 
+def check_element_invisible(context, _element, _type, timeout=timeout):
+    if _type == "selector":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.invisibility_of_element_located((By.CSS_SELECTOR, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+    
+    elif _type == "id":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.invisibility_of_element_located((By.ID, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+
+    elif _type == "xpath":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.invisibility_of_element_located((By.XPATH, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+    
+    elif _type == "text":
+        try:
+            xsearch = "//*[text()=" + '"' + _element + '"' + "]"
+            WebDriverWait(context.browser, timeout).until(
+                EC.invisibility_of_element_located((By.XPATH, xsearch))
+                )
+        except TimeoutException:
+            return False
+        return True
+
+    elif _type == "name":
+        try:
+            WebDriverWait(context.browser, timeout).until(
+                EC.invisibility_of_element_located((By.NAME, _element))
+                )
+        except TimeoutException:
+            return False
+        return True
+
 ########################################################################################################################
 ########################################################################################################################      
 @when(u'I wait for the element/type "{_element}"/"{_type}" to load')
@@ -247,6 +345,43 @@ def step_impl(context, _type, element, timeout=timeout):
     _wait = True
     while _wait and seconds < timeout:
         if check_clickable_by_element(context, _type, element):
+            _wait = False
+        seconds += 0.1
+        time.sleep(0.1)
+    # if it timesout, assert if the statment is true
+    time.sleep(0.2)
+    assert(_type)
+
+########################################################################################################################
+########################################################################################################################
+@when(u'I wait for the element/type "{element}"/"{_type}" to be invisible')
+@then(u'I wait for the element/type "{element}"/"{_type}" to be invisible')
+# _type are: selector, id, text (uses xpath search), xpath
+# element is the name of the selector, id ect
+def step_impl(context, _type, element, timeout=timeout):
+    seconds = 0.0
+    _wait = True
+    while _wait and seconds < timeout:
+        if check_element_visible(context, _type, element):
+            _wait = False
+        seconds += 0.1
+        time.sleep(0.1)
+    # if it timesout, assert if the statment is true
+    time.sleep(0.2)
+    assert(_type)
+
+
+########################################################################################################################
+########################################################################################################################
+@when(u'I wait for the element/type "{element}"/"{_type}" to be visible')
+@then(u'I wait for the element/type "{element}"/"{_type}" to be visible')
+# _type are: selector, id, text (uses xpath search), xpath
+# element is the name of the selector, id ect
+def step_impl(context, _type, element, timeout=timeout):
+    seconds = 0.0
+    _wait = True
+    while _wait and seconds < timeout:
+        if check_element_invisible(context, _type, element):
             _wait = False
         seconds += 0.1
         time.sleep(0.1)
